@@ -70,14 +70,14 @@ public class ServerClientThread extends Thread implements Runnable{
            
            while(!clientSocket.isClosed() && clientSocket.isConnected()){
               try{
-                 me.x = in.readInt();
-                 me.y = in.readInt();
+                 me.xPos = in.readInt();
+                 me.yPos = in.readInt();
                  
                  //if(players != null)
                   //System.out.println("Not Null: " + players.size());
                  
                  
-                 textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.x + " me.y: " + me.y + "\n");
+                 textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.xPos + " me.y: " + me.yPos + "\n");
                  
                  out.reset();
                  out.writeObject(players);

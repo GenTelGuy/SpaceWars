@@ -57,12 +57,13 @@ public class SlickClient extends BasicGame{
    public void update(GameContainer gc, int delta)throws SlickException{
       controls();
       
+      
       players = new Vector<Player>();
       
       System.out.println("ct size: " + ct.players.size());
       
       me = ct.me;
-        players = ct.players;
+       players = ct.players;
    }
    
    public void render(GameContainer gc, Graphics g) throws SlickException{
@@ -71,7 +72,7 @@ public class SlickClient extends BasicGame{
       
       for(int i = 0; i < players.size(); i++){
          g.setColor(Color.cyan);
-         g.fillRect(players.get(i).x, players.get(i).y, 50, 50);
+         g.fillRect(players.get(i).xPos, players.get(i).yPos, 50, 50);
       }
       
       g.drawString("Players: " + players.size(), 50, 10);
@@ -86,21 +87,37 @@ public class SlickClient extends BasicGame{
    }
    
    public void controls(){
+	   
+	  me.xAccel = 0;//Acceleration defaults to zero, the player has to CHOOSE to accelerate in a direction
+	  me.yAccel = 0;
+	  
       if(keys[Input.KEY_UP]){
-         me.y--;
+         me.yPos--;
+         me.yAccel -= me.accelMagnitude;
       }
       
-      else if(keys[Input.KEY_DOWN]){
-         me.y++;
+      if(keys[Input.KEY_DOWN]){
+         me.yPos++;
+         me.yAccel += me.accelMagnitude;
       }
       
-      else if(keys[Input.KEY_LEFT]){
-         me.x--;
+      if(keys[Input.KEY_LEFT]){
+         me.xPos--;
+         me.xAccel -= me.accelMagnitude;
+         
       }
       
-      else if(keys[Input.KEY_RIGHT]){
-         me.x++;
+      if(keys[Input.KEY_RIGHT]){
+         me.xPos++;
+         me.xAccel += me.accelMagnitude;
       }
+      
+      me.xVel += me.xAccel;
+      me.yVel += me.yAccel;
+      
+      me.xPos += me.xVel;
+      me.yPos += me.yVel;
+      
    }
    
    public static void main(String[] args) throws SlickException{
@@ -161,8 +178,8 @@ class ClientThread extends Thread implements Runnable{
          while(loop){
             try{
                if(!socket.isClosed() && socket.isConnected()){
-                    out.writeInt(me.x);
-                    out.writeInt(me.y);
+                    out.writeInt(me.xPos);
+                    out.writeInt(me.yPos);
                     out.flush();
                     
                     //players = new Vector<Player>();
