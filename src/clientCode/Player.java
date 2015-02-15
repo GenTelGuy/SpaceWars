@@ -10,7 +10,11 @@ public class Player implements Serializable{
    float xAccel;//x and y acceleration
    float yAccel;
    
+   
+   
    float accelMagnitude;
+   
+   float decelFactor;
    
    int id;
    
@@ -24,7 +28,7 @@ public class Player implements Serializable{
       
       this.accelMagnitude = 0.125f;
       
-     // this.decelFactor = 
+      this.decelFactor = 0.5f; 
       
       this.id = id;
    }

@@ -92,25 +92,30 @@ public class SlickClient extends BasicGame{
 	  me.yAccel = 0;
 	  
       if(keys[Input.KEY_UP]){
-         me.yPos--;
+         //me.yPos--;
          me.yAccel -= me.accelMagnitude;
       }
       
       if(keys[Input.KEY_DOWN]){
-         me.yPos++;
+         //me.yPos++;
          me.yAccel += me.accelMagnitude;
       }
       
       if(keys[Input.KEY_LEFT]){
-         me.xPos--;
+         //me.xPos--;
          me.xAccel -= me.accelMagnitude;
          
       }
       
       if(keys[Input.KEY_RIGHT]){
-         me.xPos++;
+         //me.xPos++;
          me.xAccel += me.accelMagnitude;
       }
+      
+      me.xAccel -= me.xVel * me.decelFactor;
+      me.yAccel -= me.yVel * me.decelFactor;
+      
+      System.out.println(me.yAccel);
       
       me.xVel += me.xAccel;
       me.yVel += me.yAccel;
