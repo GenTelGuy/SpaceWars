@@ -64,7 +64,7 @@ public class SlickClient extends BasicGame{
 		this.mouseY = input.getMouseY();
 
 
-		players = new Vector<Player>();
+		//players = new Vector<Player>();
 
 		//System.out.println("ct size: " + ct.players.size());
 
@@ -91,7 +91,7 @@ public class SlickClient extends BasicGame{
 			players.get(i).render(gc, g);
 		}
 		g.drawString("Players: " + players.size(), 50, 10);
-		me.renderProjectiles(gc, g);
+		//me.renderProjectiles(gc, g);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -128,11 +128,11 @@ public class SlickClient extends BasicGame{
 			me.xAccel += me.accelMagnitude;
 		}
 
-		System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
+		//System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
 
 		//me.decelerate();
 
-		System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
+		//System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
 
 		//System.out.println(me.yAccel);
 
@@ -204,7 +204,6 @@ class ClientThread extends Thread implements Runnable{
 						out.writeInt(me.xPos);
 						out.writeInt(me.yPos);
 						out.flush();
-
 						//players = new Vector<Player>();
 						players = (Vector<Player>) in.readObject();
 

@@ -67,7 +67,6 @@ public class ServerClientThread extends Thread implements Runnable{
 			out.writeInt(me.id);
 			out.writeObject(players);
 			out.flush();
-
 			while(!clientSocket.isClosed() && clientSocket.isConnected()){
 				try{
 					me.xPos = in.readInt();
@@ -75,7 +74,6 @@ public class ServerClientThread extends Thread implements Runnable{
 
 					//if(players != null)
 					//System.out.println("Not Null: " + players.size());
-
 
 					textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.xPos + " me.y: " + me.yPos + "\n");
 
