@@ -1,9 +1,11 @@
 package clientCode;
+import java.io.Serializable;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class Projectile {
+public class Projectile implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	public int xPos;
 	public int yPos;
