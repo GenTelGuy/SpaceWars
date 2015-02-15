@@ -11,7 +11,6 @@ public class ServerClientThread extends Thread implements Runnable{
 	Socket acceptedSocket;
 	JTextArea textArea;
 	Vector<Player> players;
-	Vector<Projectile> projectiles;
 	Player me;
 
 	public ServerClientThread(Socket acceptedSocket, Vector<Player> players, int playerID, JTextArea textArea){
@@ -75,7 +74,7 @@ public class ServerClientThread extends Thread implements Runnable{
 					me.yPos = in.readInt();
 
 					//if(players != null)
-						//System.out.println("Not Null: " + players.size());
+					//System.out.println("Not Null: " + players.size());
 
 
 					textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.xPos + " me.y: " + me.yPos + "\n");

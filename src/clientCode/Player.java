@@ -62,6 +62,17 @@ public class Player implements Serializable{
 		yPos += yVel;
 
 	}
+	
+	/*
+	 * Shoots a Projectile towards the mouse position
+	 */
+	 public void shoot(GameContainer gc, int delta){
+		 float mouseX = gc.getInput().getMouseX();
+		 float mouseY = gc.getInput().getMouseY();
+		 //TODO the projectile's velocity needs to be set towards the mouse position
+		 projectiles.add(new Projectile(xPos, yPos, 2, 2, id));
+		 System.out.println("There are " + projectiles.size() + " projectiles");
+	 }
 
 	public void render(GameContainer gc, Graphics g){
 		g.drawRect(xPos, yPos, 64, 64);

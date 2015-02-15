@@ -17,7 +17,6 @@ public class SlickClient extends BasicGame{
 
 	ClientThread ct;
 	Vector<Player> players;
-	Vector<Projectile> projectiles;
 	Player me;
 	int ALL_KEYS = 0xFF;
 	boolean keys[];
@@ -39,7 +38,6 @@ public class SlickClient extends BasicGame{
 			}
 
 			players = new Vector<Player>();
-			projectiles = new Vector<Projectile>();
 
 			connect();
 		}
@@ -57,7 +55,6 @@ public class SlickClient extends BasicGame{
 
 		me = ct.me;
 		players = ct.players;
-		projectiles = ct.projectiles;
 	}
 
 	public void update(GameContainer gc, int delta)throws SlickException{
@@ -68,25 +65,18 @@ public class SlickClient extends BasicGame{
 
 
 		players = new Vector<Player>();
-		projectiles = new Vector<Projectile>();
 
 		//System.out.println("ct size: " + ct.players.size());
 
 		me = ct.me;
 		players = ct.players;
-		projectiles = ct.projectiles;
 
 		for(int i = 0; i < players.size(); i++){
 			players.get(i).update(gc, delta);
 		}
 		
-		for(int i = 0; i < projectiles.size(); i++){
-			projectiles.get(i).update(gc, delta);
-		}
-		
 		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			System.out.println("Pressed left mouse");
-			shoot(gc, delta);
+			me.shoot(gc, delta);
 		}
 		me.updateProjectiles(gc, delta);
 	}
@@ -101,11 +91,7 @@ public class SlickClient extends BasicGame{
 			players.get(i).render(gc, g);
 		}
 		g.drawString("Players: " + players.size(), 50, 10);
-		//me.renderProjectiles(gc, g);
-		
-		for(int i = 0; i < projectiles.size(); i++){
-			projectiles.get(i).render(gc, g);
-		}
+		me.renderProjectiles(gc, g);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -156,17 +142,6 @@ public class SlickClient extends BasicGame{
 
 
 	}
-	
-	/*
-	 * Shoots a Projectile towards the mouse position
-	 */
-	 public void shoot(GameContainer gc, int delta){
-		 float mouseX = gc.getInput().getMouseX();
-		 float mouseY = gc.getInput().getMouseY();
-		 //TODO the projectile's velocity needs to be set towards the mouse position
-		 projectiles.add(new Projectile(me.xPos, me.yPos, 2, 2, me.id));
-		 System.out.println("There are " + projectiles.size() + " projectiles");
-	 }
 
 	public static void main(String[] args) throws SlickException{
 		AppGameContainer app =
@@ -183,7 +158,6 @@ public class SlickClient extends BasicGame{
 class ClientThread extends Thread implements Runnable{
 	Socket socket;
 	Vector<Player> players;
-	Vector<Projectile> projectiles;
 	int playerID;
 	Player me;
 	DataOutputStream out;
@@ -196,14 +170,12 @@ class ClientThread extends Thread implements Runnable{
 
 		try{
 			players = new Vector<Player>();
-			projectiles = new Vector<Projectile>();
 			socket = new Socket(ip, 4444);
 			socket.setTcpNoDelay(true);
 			out = new DataOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 			playerID = in.readInt(); 
 			players = (Vector<Player>) in.readObject();
-			//projectiles = (Vector<Projectile>) in.readObject();
 
 			if(players != null)
 				System.out.println("Not Null: " + players.size());
@@ -235,7 +207,6 @@ class ClientThread extends Thread implements Runnable{
 
 						//players = new Vector<Player>();
 						players = (Vector<Player>) in.readObject();
-						//projectiles = (Vector<Projectile>) in.readObject();
 
 						//System.out.println("size" + players.size());
 						sleep(15);
