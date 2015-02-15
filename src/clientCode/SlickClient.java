@@ -82,6 +82,7 @@ public class SlickClient extends BasicGame{
       }
       
       g.drawString("Players: " + players.size(), 50, 10);
+      g.drawLine(me.xPos, me.yPos, mouseX, mouseY);
       
       me.renderProjectiles(gc, g);
    }

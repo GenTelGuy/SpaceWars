@@ -20,6 +20,8 @@ public class Player implements Serializable{
    
    float decelFactor;
    
+   float shotVelocityMagnitude;
+   
    int id;
    
    public Player(int x, int y, int id){
@@ -30,9 +32,11 @@ public class Player implements Serializable{
 	      this.xAccel = 0;
 	      this.yAccel = 0;
 	      
+	      this.shotVelocityMagnitude = 10.0f;//The total speed of the shot
+	      
 	      this.accelMagnitude = 0.125f;
 	      
-	      this.decelFactor = 0.05f; 
+	      //this.decelFactor = 0.05f; Unused because this is SSSSPPPPAAACCEEE
 	      
 	      this.id = id;
 	      projectiles = new Vector<Projectile>();
@@ -81,8 +85,10 @@ public class Player implements Serializable{
    public void shoot(GameContainer gc, int delta){
 	   float mouseX = gc.getInput().getMouseX();
 	   float mouseY = gc.getInput().getMouseY();
+	   
 	   //TODO the projectile's velocity needs to be set towards the mouse position
-	   projectiles.add(new Projectile(this.xPos, this.yPos, 2, 2, this.id));
+	   projectiles.add(new Projectile(this.xPos, this.yPos, GameMath.generateShotXVel(this.xPos, this.yPos, mouseX, mouseY, this.shotVelocityMagnitude), GameMath.generateShotYVel(this.xPos, this.yPos, mouseX, mouseY, this.shotVelocityMagnitude), this.id));
+	   System.out.println("B");
    }
    
 }
