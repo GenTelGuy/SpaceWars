@@ -59,7 +59,7 @@ public class SlickClient extends BasicGame{
    
    public void update(GameContainer gc, int delta)throws SlickException{
 	  Input input = gc.getInput();
-      controls();
+      controls(gc, delta);
       this.mouseX = input.getMouseX();
       this.mouseY = input.getMouseY();
       
@@ -82,6 +82,8 @@ public class SlickClient extends BasicGame{
       }
       
       g.drawString("Players: " + players.size(), 50, 10);
+      
+      me.renderProjectiles(gc, g);
    }
    
    public void keyPressed(int key, char c) {
@@ -92,7 +94,7 @@ public class SlickClient extends BasicGame{
       keys[key] = false;
    }
    
-   public void controls(){
+   public void controls(GameContainer gc, int delta){
 	   
 	  me.xAccel = 0;//Acceleration defaults to zero, the player has to CHOOSE to accelerate in a direction
 	  me.yAccel = 0;
@@ -126,9 +128,16 @@ public class SlickClient extends BasicGame{
       
       //System.out.println(me.yAccel);
       
+      if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+    	  System.out.println("Pressed left mouse");
+    	  me.shoot(gc, delta);
+      }
+      
       me.accelerate();
       
       me.move();
+      
+      me.updateProjectiles(gc, delta);
       
    }
    
