@@ -18,6 +18,32 @@ public class Player implements Serializable{
    
    int id;
    
+   
+   //Proper use of these functions is: set the x and y accelerations, then decelerate, then accelerate, then move.
+   public void accelerate(){
+	   
+	   xVel += xAccel;
+	   yVel += yAccel;
+	   
+   }
+   
+   public void decelerate(){
+	   
+	   xAccel -= xVel * decelFactor;
+	   yAccel -= yVel * decelFactor;
+	   
+	   
+   }
+   
+   
+   public void move(){
+	   
+	   xPos += xVel;
+	   yPos += yVel;
+	   
+	   
+   }
+   
    public Player(int x, int y, int id){
       this.xPos = x;
       this.yPos = y;
@@ -28,7 +54,7 @@ public class Player implements Serializable{
       
       this.accelMagnitude = 0.125f;
       
-      this.decelFactor = 0.5f; 
+      this.decelFactor = 0.05f; 
       
       this.id = id;
    }

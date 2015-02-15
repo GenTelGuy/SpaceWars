@@ -112,16 +112,17 @@ public class SlickClient extends BasicGame{
          me.xAccel += me.accelMagnitude;
       }
       
-      me.xAccel -= me.xVel * me.decelFactor;
-      me.yAccel -= me.yVel * me.decelFactor;
+      System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
       
-      System.out.println(me.yAccel);
+      //me.decelerate();
       
-      me.xVel += me.xAccel;
-      me.yVel += me.yAccel;
+      System.out.println( "xVel: " + me.xVel + "xAccel: " + me.xAccel);
       
-      me.xPos += me.xVel;
-      me.yPos += me.yVel;
+      //System.out.println(me.yAccel);
+      
+      me.accelerate();
+      
+      me.move();
       
    }
    
