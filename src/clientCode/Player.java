@@ -15,6 +15,7 @@ public class Player implements Serializable{
 	float yAccel;
 
 	public Vector<Projectile> projectiles;
+	public Projectile p;
 
 	float accelMagnitude;
 
@@ -36,6 +37,7 @@ public class Player implements Serializable{
 
 		this.id = id;
 		projectiles = new Vector<Projectile>();
+		p = new Projectile(x, y, 2, 2, id);
 	}
 
 
@@ -77,10 +79,12 @@ public class Player implements Serializable{
 	public void render(GameContainer gc, Graphics g){
 		g.drawRect(xPos, yPos, 64, 64);
 		renderProjectiles(gc, g);
+		p.render(gc, g);
 	}
 
 	public void update(GameContainer gc, int delta){
 		updateProjectiles(gc, delta);
+		p.update(gc, delta);
 	}
 
 	public void renderProjectiles(GameContainer gc, Graphics g){

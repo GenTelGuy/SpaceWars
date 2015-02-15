@@ -61,7 +61,7 @@ public class ServerClientThread extends Thread implements Runnable{
 			Socket clientSocket = acceptedSocket;
 			clientSocket.setTcpNoDelay(true);
 			textArea.append("Accepted. Now creating I/O.\n");
-			DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 			ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
 			textArea.append("player connected. \n");
 			out.writeInt(me.id);
@@ -71,16 +71,14 @@ public class ServerClientThread extends Thread implements Runnable{
 				try{
 					me.xPos = in.readInt();
 					me.yPos = in.readInt();
-
 					//if(players != null)
 					//System.out.println("Not Null: " + players.size());
 
-					textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.xPos + " me.y: " + me.yPos + "\n");
+					//textArea.append("PlayerID: " + playerID + " Players: " + players.size() + " me.x: " + me.xPos + " me.y: " + me.yPos + "\n");
 
 					out.reset();
 					out.writeObject(players);
 					out.flush();
-
 					sleep(15);
 				}
 

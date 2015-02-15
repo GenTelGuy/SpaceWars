@@ -67,16 +67,20 @@ public class SlickClient extends BasicGame{
 		//players = new Vector<Player>();
 
 		//System.out.println("ct size: " + ct.players.size());
-
+		System.out.println();
 		me = ct.me;
 		players = ct.players;
+		System.out.println();
 
 		for(int i = 0; i < players.size(); i++){
 			players.get(i).update(gc, delta);
 		}
 		
-		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){		
+			System.out.println();
 			me.shoot(gc, delta);
+			
+			System.out.println();
 		}
 		me.updateProjectiles(gc, delta);
 	}
@@ -87,18 +91,18 @@ public class SlickClient extends BasicGame{
 
 		for(int i = 0; i < players.size(); i++){
 			g.setColor(Color.cyan);
-			g.fillRect(players.get(i).xPos, players.get(i).yPos, 50, 50);
+			//g.fillRect(players.get(i).xPos, players.get(i).yPos, 50, 50);
 			players.get(i).render(gc, g);
 		}
 		g.drawString("Players: " + players.size(), 50, 10);
-		//me.renderProjectiles(gc, g);
+		//me.render(gc, g);
 	}
 
-	public void keyPressed(int key, char c) {
+	public void keyPressed(int key, char c){
 		keys[key] = true;
 	}
 
-	public void keyReleased(int key, char c) {
+	public void keyReleased(int key, char c){
 		keys[key] = false;
 	}
 
@@ -160,7 +164,7 @@ class ClientThread extends Thread implements Runnable{
 	Vector<Player> players;
 	int playerID;
 	Player me;
-	DataOutputStream out;
+	ObjectOutputStream out;
 	ObjectInputStream in;
 	boolean loop = true;
 
@@ -172,7 +176,7 @@ class ClientThread extends Thread implements Runnable{
 			players = new Vector<Player>();
 			socket = new Socket(ip, 4444);
 			socket.setTcpNoDelay(true);
-			out = new DataOutputStream(socket.getOutputStream());
+			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 			playerID = in.readInt(); 
 			players = (Vector<Player>) in.readObject();
@@ -205,8 +209,8 @@ class ClientThread extends Thread implements Runnable{
 						out.writeInt(me.yPos);
 						out.flush();
 						//players = new Vector<Player>();
-						players = (Vector<Player>) in.readObject();
-
+						Vector<Player> temp = players;
+						players = (Vector<Player>) in.readObject(); //TODO this line of code creates a new players Vector, therefore resetting the projectiles objects
 						//System.out.println("size" + players.size());
 						sleep(15);
 					}
