@@ -5,17 +5,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Projectile implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 2L;
+
 	public int xPos;
 	public int yPos;
 	public float xVel;
 	public float yVel;
-	
+
 	private int scaleTimer = 0;
-	
+
 	public int teamID;
-	
+
 	public Projectile(int x, int y, float xVel, float yVel, int id){
 		xPos = x;
 		yPos = y;
@@ -23,7 +23,7 @@ public class Projectile implements Serializable{
 		this.yVel = yVel;
 		teamID = id;
 	}
-	
+
 	public void render(GameContainer gc, Graphics g){
 		//Fancy polar drawing code
 		for(int i = 0; i < 360; i += 5){
@@ -33,14 +33,14 @@ public class Projectile implements Serializable{
 			g.drawRect(xPos + (float)(r * Math.cos(theta)) * scale, yPos + (float)(r * Math.sin(theta)) * scale, 2, 2);
 		}
 	}
-	
+
 	public void update(GameContainer gc, int delta){
 		//used to expand or shrink the rotating electron-cloud-like effect
 		scaleTimer += (float)(delta / 10f);
 		if(scaleTimer >= 360){
 			scaleTimer = 0;
 		}
-		
+
 		xPos += xVel;
 		yPos += yVel;
 	}
