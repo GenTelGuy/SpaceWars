@@ -21,6 +21,9 @@ public class SlickClient extends BasicGame{
    int ALL_KEYS = 0xFF;
    boolean keys[];
    
+   float mouseX = 0;
+   float mouseY = 0;
+   
    public SlickClient()
     {
         super("Test Online Client - by William Starkovich");
@@ -55,7 +58,10 @@ public class SlickClient extends BasicGame{
     }
    
    public void update(GameContainer gc, int delta)throws SlickException{
+	  Input input = gc.getInput();
       controls();
+      this.mouseX = input.getMouseX();
+      this.mouseY = input.getMouseY();
       
       
       players = new Vector<Player>();
